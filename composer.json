@@ -1,0 +1,15 @@
+{
+  "name": "gabrielfs7/rabbitmq",
+  "type": "project",
+  "description": "Playground project to test RabbitMQ",
+  "authors": [
+    {
+      "name": "Gabriel Felipe Soares",
+      "email": "gabrielfs7@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+      "php-amqplib/php-amqplib": ">=2.6.3"
+  }
+}
