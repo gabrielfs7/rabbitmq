@@ -1,16 +1,20 @@
 <?php
-
 require_once __DIR__ . '/vendor/autoload.php';
+require_once __DIR__ . '/MessageDto.php';
 
-use PhpAmqpLib\Connection\AMQPStreamConnection;
 use PhpAmqpLib\Message\AMQPMessage;
 
-$connection = new AMQPStreamConnection('localhost', 5672, 'guest', 'guest');
-$channel = $connection->channel();
+/** @var PhpAmqpLib\Connection\AMQPStreamConnection $connection */
+$connection = require_once __DIR__ . '/connection.php';
 
+$channel = $connection->channel();
 $channel->queue_declare('hello', false, false, false, false);
 
-$msg = new AMQPMessage('Hello World!');
-$channel->basic_publish($msg, '', 'hello');
+$messageDto = new MessageDto();
+$messageDto->time = microtime(true);
+$messageDto->id = uniqid();
+$messageDto->message = strtoupper(range('a', 'z')[rand(0, 23)]);
 
-echo " [x] Sent 'Hello World!'\n";
+$channel->basic_publish(new AMQPMessage($messageJson = json_encode($messageDto)), '', 'hello');
+
+echo " [x] Sent $messageJson \n";
