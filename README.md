@@ -24,4 +24,4 @@ php receive.php (in a terminal window #3)
 sh send_multiple_unique.sh
 ```
 
-It will send messages but avoiding repeated messages to be reprocessed while a previous one was not marked as acknowledge. The idea is to change the simple Storage class for an Redis or MemcacheD server. It is just a playground!
+It will send messages but avoiding repeated messages to be reprocessed while a previous one was not marked as acknowledge. The idea is to change the simple Storage class for a Redis or MemcacheD server. It is just a playground!
