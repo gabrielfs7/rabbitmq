@@ -32,17 +32,3 @@ $messageDto->id = $id;
 $messageDto->message = $seconds;
 
 $channel->exchange_declare($exchangeName, 'fanout', false, false, false);
-$channel->basic_publish(
-    new AMQPMessage(
-        $messageJson = json_encode($messageDto),
-        [
-            'message_id' => $messageDto->id,
-            'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
-            'correlation_id' => $messageDto->id
-        ]
-    ),
-    '',
-    $queueName
-);
-
-echo " [x] Sent $messageJson \n";

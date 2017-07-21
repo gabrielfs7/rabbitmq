@@ -10,6 +10,16 @@
     }
   ],
   "require": {
+      "php": ">=5.5.0",
+      "symfony/dependency-injection" : "v3.1.5",
       "php-amqplib/php-amqplib": ">=2.6.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "GSoares\\RabbitMQ\\" : "src"
+    }
+  },
+  "config": {
+    "bin-dir": "bin"
   }
 }
