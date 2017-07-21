@@ -61,7 +61,7 @@ class Consumer implements ConsumerInterface
                 $message = $message;
                 $messageId = $message->get('message_id');
 
-                $this->storage->store($messageId);
+                $this->storage->remove($messageId);
 
                 /** @var Message $messageVo */
                 $messageVo = unserialize($message->body);
@@ -71,8 +71,6 @@ class Consumer implements ConsumerInterface
                 /** @var \PhpAmqpLib\Message\AMQPMessage $message */
                 $message->delivery_info['channel']
                     ->basic_ack($message->delivery_info['delivery_tag'], true);
-
-                $this->storage->remove($messageId);
             }
         );
 
@@ -88,10 +86,8 @@ class Consumer implements ConsumerInterface
     {
         $timeSpent = microtime(true) - $messageVo->getTime();
 
-        echo " [x] Received message [{$messageVo->getId()}] [sleep for {$messageVo->getMessage()}'s]($timeSpent's)\n";
-
         sleep($messageVo->getMessage());
 
-        echo " [x] Done [{$messageVo->getId()}] [sleep for {$messageVo->getMessage()}'s]($timeSpent's)\n";
+        echo " [x] Received message [{$messageVo->getId()}] [sleep for {$messageVo->getMessage()}'s]($timeSpent's)\n";
     }
 }

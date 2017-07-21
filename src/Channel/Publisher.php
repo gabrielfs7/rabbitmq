@@ -70,6 +70,8 @@ class Publisher implements PublisherInterface
             $this->channelConfiguration->getQueueName()
         );
 
+        $this->storage->store($message->getId());
+
         echo "[OK] Message [{$message->getId()}] sent\n";
     }
 }
