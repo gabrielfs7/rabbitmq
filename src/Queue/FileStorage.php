@@ -1,6 +1,6 @@
 <?php
 
-namespace GSoares\RabbitMQ\Factory;
+namespace GSoares\RabbitMQ\Queue;
 
 /**
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
@@ -13,9 +13,9 @@ class FileStorage implements StorageInterface
      */
     private $filePath;
 
-    public function __construct()
+    public function __construct($rootPath)
     {
-        $this->startStorageFile();
+        $this->filePath = "$rootPath/storage.data";
     }
 
     /**
@@ -69,8 +69,6 @@ class FileStorage implements StorageInterface
 
     private function startStorageFile()
     {
-        $this->filePath = __DIR__ . '/storage.data';
-
         if (file_exists($this->filePath)) {
             touch($this->filePath);
         }

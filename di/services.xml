@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <!-- Channel -->
+        <service id="service.channel.consumer" class="GSoares\RabbitMQ\Channel\Consumer">
+            <call method="setStorage">
+                <argument type="service" id="service.queue.file_storage"/>
+            </call>
+        </service>
+
+        <service id="service.channel.publisher" class="GSoares\RabbitMQ\Channel\Publisher">
+            <call method="setStorage">
+                <argument type="service" id="service.queue.file_storage"/>
+            </call>
+        </service>
+
+        <!-- Factories -->
+        <service id="service.factory.channel" class="GSoares\RabbitMQ\Factory\ChannelFactory">
+        </service>
+
+        <service id="service.factory.connection" class="GSoares\RabbitMQ\Factory\ConnectionFactory">
+            <call method="setConfiguration">
+                <argument>%rabbitmq.configuration%</argument>
+            </call>
+        </service>
+
+        <!-- Queue -->
+        <service id="service.queue.file_storage" class="GSoares\RabbitMQ\Queue\FileStorage">
+            <argument>%root.path%</argument>
+        </service>
+    </services>
+</container>

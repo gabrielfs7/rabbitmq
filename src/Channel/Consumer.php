@@ -2,10 +2,10 @@
 
 namespace GSoares\RabbitMQ\Channel;
 
+use GSoares\RabbitMQ\Queue\StorageInterface;
 use GSoares\RabbitMQ\Vo\ChannelConfiguration;
 use GSoares\RabbitMQ\Vo\Message;
 use PhpAmqpLib\Channel\AMQPChannel;
-use GSoares\RabbitMQ\Factory\StorageInterface;
 
 /**
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>
@@ -88,10 +88,10 @@ class Consumer implements ConsumerInterface
     {
         $timeSpent = microtime(true) - $messageVo->getTime();
 
-        echo " [x] Received [sleep for {$messageVo->getMessage()}'s]($timeSpent's)\n";
+        echo " [x] Received message [{$messageVo->getId()}] [sleep for {$messageVo->getMessage()}'s]($timeSpent's)\n";
 
         sleep($messageVo->getMessage());
 
-        echo " [x] Done [sleep for {$messageVo->getMessage()}'s]($timeSpent's)\n";
+        echo " [x] Done [{$messageVo->getId()}] [sleep for {$messageVo->getMessage()}'s]($timeSpent's)\n";
     }
 }

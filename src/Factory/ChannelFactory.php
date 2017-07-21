@@ -17,6 +17,17 @@ class ChannelFactory
     private $connection;
 
     /**
+     * @param AMQPStreamConnection $connection
+     * @return $this
+     */
+    public function setConnection(AMQPStreamConnection $connection)
+    {
+        $this->connection = $connection;
+
+        return $this;
+    }
+
+    /**
      * @param ChannelConfiguration $channelConfigurationDto
      * @return \PhpAmqpLib\Channel\AMQPChannel
      */

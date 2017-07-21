@@ -12,31 +12,24 @@ class ConnectionFactory
 {
 
     /**
-     * @var $configurationPath
+     * @var array
      */
-    private $configurationPath;
+    private $configuration;
 
     /**
      * @var ConnectionConfiguration
      */
     private $connectionConfiguration;
 
-    /**
-     * @param string $configurationPath
-     */
-    public function __construct($configurationPath)
+    public function setConfiguration(array $configuration)
     {
-        if (file_exists($configurationPath) && is_readable($configurationPath)) {
-            $this->configurationPath = file_get_contents($configurationPath);
-        }
-
-        throw new \LogicException("Missing configuration file [config.json]");
+        $this->configuration = (object) $configuration;
     }
 
     /**
      * @param ConnectionConfiguration $connectionConfiguration
      */
-    public function setConfigurationDto(ConnectionConfiguration $connectionConfiguration)
+    public function setConnectionConfiguration(ConnectionConfiguration $connectionConfiguration)
     {
         $this->connectionConfiguration = $connectionConfiguration;
     }
@@ -67,6 +60,6 @@ class ConnectionFactory
      */
     private function getConfiguration()
     {
-        return $this->connectionConfiguration ?: json_decode(file_get_contents($this->configurationPath));
+        return $this->connectionConfiguration ?: $this->configuration;
     }
 }

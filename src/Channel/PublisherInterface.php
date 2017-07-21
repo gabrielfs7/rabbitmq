@@ -2,10 +2,10 @@
 
 namespace GSoares\RabbitMQ\Channel;
 
+use GSoares\RabbitMQ\Queue\StorageInterface;
 use GSoares\RabbitMQ\Vo\ChannelConfiguration;
 use GSoares\RabbitMQ\Vo\Message;
 use PhpAmqpLib\Channel\AMQPChannel;
-use GSoares\RabbitMQ\Factory\StorageInterface;
 
 /**
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>

@@ -1,34 +1,22 @@
 <?php
-require_once __DIR__ . '/vendor/autoload.php';
-require_once __DIR__ . '/MessageDto.php';
-require_once __DIR__ . '/Storage.php';
+/** @var \Symfony\Component\DependencyInjection\ContainerBuilder $containerBuilder */
+$containerBuilder = require_once __DIR__ . '/bootstrap.php';
+$channelConfiguration = new \GSoares\RabbitMQ\Vo\ChannelConfiguration();
 
-use PhpAmqpLib\Message\AMQPMessage;
+$connection = $containerBuilder->get('service.factory.connection')
+    ->createConnection();
 
-$storage = new Storage();
+$channel = $containerBuilder
+    ->get('service.factory.channel')
+    ->setConnection($connection)
+    ->createChannel($channelConfiguration);
 
-/** @var PhpAmqpLib\Connection\AMQPStreamConnection $connection */
-$connection = require_once __DIR__ . '/connection.php';
+$message = new \GSoares\RabbitMQ\Vo\Message();
+$message->setTime(microtime(true));
+$message->setId($_SERVER['argv'][1]);
+$message->setMessage($_SERVER['argv'][2]);
 
-$isDurable = true;
-$queueName = 'task_queue';
-$exchangeName = 'logs';
-
-$channel = $connection->channel();
-$channel->queue_declare($queueName, false, $isDurable, false, false);
-
-$id = $_SERVER['argv'][1];
-$seconds = $_SERVER['argv'][2];
-
-if ($storage->has($id)) {
-    echo " [x] Message ID [$id] already exists \n";
-
-    return;
-}
-
-$messageDto = new MessageDto();
-$messageDto->time = microtime(true);
-$messageDto->id = $id;
-$messageDto->message = $seconds;
-
-$channel->exchange_declare($exchangeName, 'fanout', false, false, false);
+$containerBuilder
+    ->get('service.channel.publisher')
+    ->setChannelConfiguration($channelConfiguration)
+    ->publish($channel, $message);

@@ -1,6 +1,6 @@
 <?php
 
-namespace GSoares\RabbitMQ\Factory;
+namespace GSoares\RabbitMQ\Queue;
 
 /**
  * @author Gabriel Felipe Soares <gabrielfs7@gmail.com>

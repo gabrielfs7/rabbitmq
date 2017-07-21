@@ -2,10 +2,10 @@
 
 namespace GSoares\RabbitMQ\Channel;
 
+use GSoares\RabbitMQ\Queue\StorageInterface;
 use GSoares\RabbitMQ\Vo\ChannelConfiguration;
 use GSoares\RabbitMQ\Vo\Message;
 use PhpAmqpLib\Channel\AMQPChannel;
-use GSoares\RabbitMQ\Factory\StorageInterface;
 use PhpAmqpLib\Message\AMQPMessage;
 
 /**
@@ -52,6 +52,8 @@ class Publisher implements PublisherInterface
     public function publish(AMQPChannel $channel, Message $message)
     {
         if ($this->storage->has($message->getId())) {
+            echo "[ERROR] Message [{$message->getId()}] has already been sent\n";
+
             return;
         }
 
@@ -67,5 +69,7 @@ class Publisher implements PublisherInterface
             '',
             $this->channelConfiguration->getQueueName()
         );
+
+        echo "[OK] Message [{$message->getId()}] sent\n";
     }
 }
