@@ -4,7 +4,8 @@ Playground to test RabbitMQ
 # Requirements
 
 1) Install RabbitMQ server
-2) Create a config.json file based on the config.json.dist file
+2) Start RabbitMQ server
+3) Create a di/environment.xml file based on the di/environment.xml.dist file and change for you local config
 
 # References:
 https://www.rabbitmq.com/tutorials/tutorial-one-php.html
