@@ -50,6 +50,11 @@ class ChannelFactory
             false,
             false
         );
+        $channel->queue_bind(
+            $channelConfigurationDto->getQueueName(), 
+            $channelConfigurationDto->getExchangeName(), 
+            $channelConfigurationDto->getQueueName()
+        );
 
         return $channel;
     }
